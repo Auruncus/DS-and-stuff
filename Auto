@@ -1,0 +1,115 @@
+#include <iostream>
+using namespace std;
+
+typedef unsigned short power_t;
+enum Fuel {Petrol,Diesel};
+
+class Engine
+{
+private:
+	power_t power;
+	Fuel fuel;
+	double consume; // расход топлива
+public:
+	Engine(power_t p, Fuel f, double c)
+	{
+		power = p;
+		fuel = f;
+		consume = c;
+	}
+	double conFuel(size_t path)
+	{
+		return path*consume;
+	}
+};
+
+class Tank
+{
+private:
+	double capacity;
+public:
+	Tank(double cap) : capacity(cap) {}
+	bool isEmpty() const { return capacity <= 0.0; }
+	void consume(double value) {
+		if (!isEmpty())
+			capacity -= value;
+	}
+};
+
+class Auto
+{
+protected:
+	Engine *engine;
+	Tank *tank;
+public:
+	Auto(Engine *e, Tank *t) :engine(e), tank(t)
+	{}
+	void move(size_t path)
+	{
+		size_t current = 0;
+		while (current < path && tank->isEmpty() == false)
+		{
+			tank->consume(engine->conFuel(1.0));
+			cout << "Current dist: " << current << "km" << endl;
+			current++;
+		}
+		cout << "Stop!" << endl;
+	}
+  ///////////
+  void fuelAdd(double value) {
+  tank->fuelAdd(value);
+  }
+};
+
+class Car : public Auto
+{
+protected:
+	size_t passengers;
+public:
+	Car(Engine *e, Tank *t, size_t pass) :Auto(e, t)
+	{
+		passengers = pass;
+	}
+};
+
+class Lorry : public Auto
+{
+protected:
+	size_t cargo;
+public:
+	Lorry(Engine *e, Tank *t, size_t c) :Auto(e, t)
+	{
+		cargo = c;
+	}
+};
+
+//Tank second variant 
+
+class Tank
+{
+private:
+	double capacity; fuelValue
+public:
+	Tank(double cap) : capacity(cap),fuelValue(0) {}
+	bool isEmpty() const { return capacity <= 0.0; }
+	void consume(double value) {
+		if (!isEmpty())
+			capacity -= value;
+	}
+  void fuelAdd(double value){
+  if(fuelValue+ value> capcity)
+    fuelValue=capacity;
+  else 
+    fuelValue+=value;
+};
+
+
+int main() 
+{
+Auto lada(new Engine(100, Petrol,1), new Tank(40)); //сразу динамически
+Engine eng1(100,Petrol,1);            // или задать статически
+Auto lada(&eng1,new Tank(40));
+lada.move(10);
+
+return 0;
+}
