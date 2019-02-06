@@ -1,0 +1,81 @@
+/*
+
+1.Simple
+2.Science
+3.Engineer
+4.Financial
+5.Programmer
+
+Simple общий класс для остальных
+A<-B<-C
+
+A *p1 = new B
+A *p2 = new C
+
+B *q1=new A; !!!Wrong!!! class A "poorer"
+
+A*p1=new B
+p1->info();
+((B*)p)->info()
+C *p2=new C;
+p2->B::info();
+
+virtual void info() --A
+void info --B
+boid info -- C
+A*p1=new C;
+p1->info() call info from C
+
+
+Если в классе присутствует хотя бы одна виртуальная функция то такой класс называется абстрактным, но он необходим для наследования
+*/
+#include <iostream>
+using namespace std;
+class Domestic
+{
+public:
+	virtual void say() = 0; //pure virtual - abstarct
+	/*
+	virtual void say() - not abstarct
+	
+	{
+
+
+	}
+
+	*/
+};
+class Domestic2
+{
+	
+public:
+	virtual void say() = 0; //---интерфейс домашенго животного
+	virtual void move() = 0;
+
+};
+class Student
+{
+public:
+	virtual void attend() = 0;
+	virtual void dowork() = 0;
+	virtual void exams() = 0;
+};
+
+class Cow :public Domestic
+{
+public:
+	void say() { cout << "Muuu" << endl; }
+};
+class Horse :public Domestic
+{
+public:
+	void say() { cout << "Igoogo" << endl; }
+};
+
+int main()
+{
+	Domestic *Stado[100];
+	stado[0] = new Cow(..);
+	for (Domestic*a : stado)
+		a->say();
+}
